@@ -1,7 +1,7 @@
-from ga import GAFJSP, TwoPointCrossover, UniformCrossover, POXCrossover
-from fjsp import FJSP, Problem, Job, Operation, Machine
+from ga import GeneticAlgoritm, TwoPointCrossover, UniformCrossover, POXCrossover
+from fjsp import FJSP, Problem, Job, Operation, Machine, save_as_fig
 
-ga = GAFJSP()
+ga = GeneticAlgoritm()
 
 job_1 = Job(1)
 operation_11 = Operation(1, job_1.id)
@@ -38,7 +38,8 @@ operation_23.add_machine(Machine(5, 8))
 job_2.add_operation(operation_23)
 
 problem = Problem([job_1, job_2], 5)
-ga.solve(problem)
+resources = ga.solve(problem)
+save_as_fig('test.png', resources, width=10, height=5)
 
 # p1 = [2, 2, 1, 3, 2, 4, 5, 3, 1, 5, 4, 3, 1, 2]
 # p2 = [5, 1, 2, 1, 4, 3, 2, 5, 3, 2, 2, 1, 4, 3]

@@ -12,17 +12,17 @@ import the `FJSP` module and the solver module. Currently only available GA for 
 
 Example
 ```python
-from fjsp import FJSP
+from fjsp import FJSP, save_as_fig
 from ga import GeneticAlgoritm
 
 solver = GeneticAlgoritm()
 fjsp = FJSP("dataset.fjs", solver)
 resources = fjsp.solve(iter=10, selected_offspring=.7)
-fjsp.save_as_fig('output.png', resources)
+save_as_fig('output.png', resources)
 ```
 
 ## Example Output
-![](https://github.com/share424/Flexible-Job-Shop-Scheduling-Problem/blob/master/output.png?raw=true)
+![](https://github.com/share424/Flexible-Job-Shop-Scheduling-Problem/blob/master/test.png?raw=true)
 
 ## Documentations
 ### GeneticAlgoritm
@@ -68,12 +68,14 @@ Read the dataset and set the solver
 #### solve(**kwargs)
 solve the given problem. This function will call the solver `solve` function
 
-#### save_as_fig(filename: str, resources: List[Resource])
+#### save_as_fig(filename: str, resources: List[Resource], width=100, height=9)
 save the result from `solve` function to `gantt` chart
 | Properties       | Description     | Default     |
 | :------------- | :----------: | -----------: |
 |  `filename` | the output file   |     |
 |  `resources` | the resources result from the solver   |     |
+|  `width` | the figure height   |  `100`   |
+|  `height` | the figure width   |  `9`   |
 
 ## Dataset
 * in the first line there are (at least) 2 numbers: the first is the number of jobs and the second the number of machines (the 3rd is not necessary, it is the average number of machines per operation)

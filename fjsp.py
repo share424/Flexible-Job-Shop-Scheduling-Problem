@@ -175,39 +175,7 @@ class FJSP:
         self.problem: Problem = self.parse_dataset(dataset)
     
     def solve(self, **kwargs) -> List[Resource]:
-        self.solver.solve(self.problem, **kwargs)
-
-    def save_as_fig(self, filename: str, resources: List[Resource]):
-        data = {
-            'resource': [],
-            'start': [],
-            'duration': [],
-            'color': [],
-            'label': []
-        }
-        colors = [mcolors.CSS4_COLORS[k] for k in mcolors.CSS4_COLORS if k.lower() != 'white']
-        for resource in resources:
-            for task in resource.tasks:
-                data['resource'].append(f"Machine {resource.machine_id}")
-                data['start'].append(task.relative_start)
-                data['duration'].append(task.duration)
-                data['color'].append(colors[task.operation.job_id % len(colors)].lower())
-                data['label'].append(f"J{task.operation.job_id}.{task.operation.id}")
-        
-        plt.figure(figsize=(100,9))
-        plt.barh(y=data['resource'], left=data['start'], width=data['duration'], color=data['color'])
-
-        # Invert y axis
-        plt.gca().invert_yaxis()
-
-        for i in range(len(data['label'])):
-            plt.text(data['start'][i], data['resource'][i], data['label'][i])
-
-        # add grid lines
-        plt.grid(axis='x', alpha=0.5)
-
-        #save fig
-        plt.savefig(filename)
+        return self.solver.solve(self.problem, **kwargs)
 
     def parse_dataset(self, dataset) -> Problem:
         with open(dataset, "r") as file:
@@ -242,4 +210,34 @@ class FJSP:
             
         return Problem(jobs, number_machine)
 
-                    
+def save_as_fig(filename: str, resources: List[Resource], width=100, height=9):
+    data = {
+        'resource': [],
+        'start': [],
+        'duration': [],
+        'color': [],
+        'label': []
+    }
+    colors = [mcolors.CSS4_COLORS[k] for k in mcolors.CSS4_COLORS if k.lower() != 'white']
+    for resource in resources:
+        for task in resource.tasks:
+            data['resource'].append(f"Machine {resource.machine_id}")
+            data['start'].append(task.relative_start)
+            data['duration'].append(task.duration)
+            data['color'].append(colors[task.operation.job_id % len(colors)].lower())
+            data['label'].append(f"J{task.operation.job_id}.{task.operation.id}")
+    
+    plt.figure(figsize=(width, height))
+    plt.barh(y=data['resource'], left=data['start'], width=data['duration'], color=data['color'])
+
+    # Invert y axis
+    plt.gca().invert_yaxis()
+
+    for i in range(len(data['label'])):
+        plt.text(data['start'][i], data['resource'][i], data['label'][i])
+
+    # add grid lines
+    plt.grid(axis='x', alpha=0.5)
+
+    #save fig
+    plt.savefig(filename)
