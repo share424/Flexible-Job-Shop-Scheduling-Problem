@@ -13,9 +13,9 @@ import the `FJSP` module and the solver module. Currently only available GA for 
 Example
 ```python
 from fjsp import FJSP, save_as_fig
-from ga import GeneticAlgoritm
+from ga import GeneticAlgorithm
 
-solver = GeneticAlgoritm()
+solver = GeneticAlgorithm()
 fjsp = FJSP("dataset.fjs", solver)
 resources = fjsp.solve(iter=10, selected_offspring=.7)
 save_as_fig('output.png', resources)
