@@ -1,7 +1,7 @@
-from ga import GeneticAlgoritm, TwoPointCrossover, UniformCrossover, POXCrossover
+from ga import GeneticAlgorithm, TwoPointCrossover, UniformCrossover, POXCrossover
 from fjsp import FJSP, Problem, Job, Operation, Machine, save_as_fig
 
-ga = GeneticAlgoritm()
+ga = GeneticAlgorithm()
 
 job_1 = Job(1)
 operation_11 = Operation(1, job_1.id)

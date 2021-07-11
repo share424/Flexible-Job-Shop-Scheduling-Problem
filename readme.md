@@ -25,7 +25,7 @@ save_as_fig('output.png', resources)
 ![](https://github.com/share424/Flexible-Job-Shop-Scheduling-Problem/blob/master/test.png?raw=true)
 
 ## Documentations
-### GeneticAlgoritm.solve(problem: Problem, population_amount=100, gs=.6, ls=.3, rs=.1, parent_selector='tournament', pm=.1, iter=100, selected_offspring=.5) -> List[Resource]
+### GeneticAlgorithm.solve(problem: Problem, population_amount=100, gs=.6, ls=.3, rs=.1, parent_selector='tournament', pm=.1, iter=100, selected_offspring=.5) -> List[Resource]
 solve the genetic algoritm based on the given problem. Return the decoded best chromosome
 | Properties       | Description     | Default     |
 | :------------- | :----------: | -----------: |
@@ -41,37 +41,37 @@ solve the genetic algoritm based on the given problem. Return the decoded best c
 
 **Note: make sure `gs + ls + rs == 1`, otherwise an error will thrown**
 
-### GeneticAlgoritm.decode_chromosome(chromosome: Chromosome) -> List[Resource]
+### GeneticAlgorithm.decode_chromosome(chromosome: Chromosome) -> List[Resource]
 Decode the given chromosome into list of resources
 | Properties       | Description     | Default     |
 | :------------- | :----------: | -----------: |
 |  `chromosome` | the given chromosome   |     |
 
-### GeneticAlgoritm.calculate_fitness(chromosome: Chromosome) -> int
+### GeneticAlgorithm.calculate_fitness(chromosome: Chromosome) -> int
 Calculate the fitness of the chromosome. In this problem, this function will calculate the makespan of the problem
 | Properties       | Description     | Default     |
 | :------------- | :----------: | -----------: |
 |  `chromosome` | the given chromosome   |     |
 
-### GeneticAlgoritm.evaluate() -> int
+### GeneticAlgorithm.evaluate() -> int
 Calculate all fitness of the current population and sort them based on the best fitness (ascending)
 
-### GeneticAlgoritm.global_selection() -> int
+### GeneticAlgorithm.global_selection() -> int
 Do global selection to get 1 chromosome
 
-### GeneticAlgoritm.local_selection() -> int
+### GeneticAlgorithm.local_selection() -> int
 Do local selection to get 1 chromosome
 
-### GeneticAlgoritm.random_selection() -> int
+### GeneticAlgorithm.random_selection() -> int
 Do random selection to get 1 chromosome
 
-### GeneticAlgoritm.is_valid_chromosome(chromosome: Chromosome) -> bool
+### GeneticAlgorithm.is_valid_chromosome(chromosome: Chromosome) -> bool
 Check if the given chromosome is valid or not. This function will check the machine selection part to check if the selected machine is available in the operation or not
 | Properties       | Description     | Default     |
 | :------------- | :----------: | -----------: |
 |  `chromosome` | the given chromosome   |     |
 
-### GeneticAlgoritm.fix_chromosome(chromosome: Chromosome) -> Chromosome
+### GeneticAlgorithm.fix_chromosome(chromosome: Chromosome) -> Chromosome
 Fix the invalid chromosome from `is_valid_chromosome`. This function will set the invalid machine with the last available machine in that operation
 | Properties       | Description     | Default     |
 | :------------- | :----------: | -----------: |

@@ -164,9 +164,9 @@ class OSMutator(Mutator):
             np.random.shuffle(pc)
         return pc
 
-class GeneticAlgoritm(Solver):
+class GeneticAlgorithm(Solver):
     def __init__(self):
-        super(GeneticAlgoritm, self).__init__("Genetic Algorithm")
+        super(GeneticAlgorithm, self).__init__("Genetic Algorithm")
         self.parent_selectors: List[ParentSelector] = [
             RoulleteWheel(),
             Tournament()
