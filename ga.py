@@ -434,9 +434,20 @@ class GeneticAlgorithm(Solver):
 
         os_mutator = OSMutator(pm)
         ms_mutator = MSMutator(pm)
+
+        print("========== Before =============")
+        top_3 = self.population[:3]
+        for i, c in enumerate(top_3):
+            print(f"Top {i+1}")
+            print("Machine Selection:", c.machine_selection)
+            print("Operation Sequence:", c.operation_sequence)
+            print("Fitness/Makespan:", c.fitness)
+            print("==========================================")
         
 
         new_population: List[Chromosome] = []
+        crossover_amount = 0
+        mutation_amount = 0
         for i in range(iter):
             print("Generation", i+1)
             while (len(new_population) < population_amount):
@@ -445,11 +456,16 @@ class GeneticAlgorithm(Solver):
                 p2_idx = selector.select_parent(self.population)
                 p1 = self.population[p1_idx]
                 p2 = self.population[p2_idx]
-                p = np.random.rand()
-                # do crossover if p < pc
-                # if p < pc:
-                    # is_valid = False
-                    # while not is_valid:
+
+                if crossover_amount < 3:
+                    print("Before Crossover")
+                    print("Selected Parent 1:")
+                    print("Machine Selection:", p1.machine_selection)
+                    print("Operation Sequence:", p1.operation_sequence)
+                    print("Selected Parent 2:")
+                    print("Machine Selection:", p2.machine_selection)
+                    print("Operation Sequence:", p2.operation_sequence)
+                
                 if len(new_population) < population_amount // 2:
                     ms1, ms2 = two_point_crossover.crossover(p1.machine_selection, p2.machine_selection)
                 else:
@@ -461,22 +477,35 @@ class GeneticAlgorithm(Solver):
                 c2 = self.fix_chromosome(c2)
                 new_population.append(c1)
                 new_population.append(c2)
-                # ms1, ms2 = c1.machine_selection, c2.machine_selection
-                # os1, os2 = c1.operation_sequence, c2.operation_sequence
-                # else:
-                #     ms1, ms2 = p1.machine_selection, p2.machine_selection
-                #     os1, os2 = p1.operation_sequence, p2.operation_sequence
+
+                if crossover_amount < 3:
+                    print("After Crossover")
+                    print("Offspring 1:")
+                    print("Machine Selection:", c1.machine_selection)
+                    print("Operation Sequence:", c2.operation_sequence)
+                    print("Offspring 2:")
+                    print("Machine Selection:", c1.machine_selection)
+                    print("Operation Sequence:", c2.operation_sequence)
                 
-                # new_population.append(Chromosome(ms1, os1))
-                # new_population.append(Chromosome(ms2, os2))
+                crossover_amount += 1
+               
             
             for i, c in enumerate(new_population):
                 # do mutation if p < pm
                 p = np.random.rand()
                 if p < pm:
+                    if mutation_amount < 3:
+                        print("Before Mutation")
+                        print("Machine Selection:", c.machine_selection)
+                        print("Operation Sequence:", c.operation_sequence)
                     ms = ms_mutator.mutate(c.machine_selection, self.problem)
                     os = os_mutator.mutate(c.operation_sequence)
                     new_population[i] = Chromosome(ms, os)
+                    if mutation_amount < 3:
+                        print("After Mutation")
+                        print("Machine Selection:", ms)
+                        print("Operation Sequence:", os)
+                    mutation_amount += 1
             
             # self.population = new_population
             for i in range(len(new_population)):
@@ -484,18 +513,17 @@ class GeneticAlgorithm(Solver):
                 new_population[i].set_fitness(fitness)
             sorted(new_population, key=lambda c: c.fitness)
 
-            # set top-10% from new population
+            # set top-t% from new population
             t = int(selected_offspring*population_amount)
             self.population[-t:] = new_population[:t]
-            # print(len(self.population), len(new_population))
+            
             # re-evaluate the new population
             self.evaluate()
             best_chromosome = self.population[0]
             print("Best fitness:", best_chromosome.fitness)
+        
+        print("========== After ============")
         # get the best chromosome
-        # best_chromosome = self.population[0]
-        # print("Best Chromosome:", best_chromosome)
-        # print("Best fitness:", best_chromosome.fitness)
         top_3 = self.population[:3]
         for i, c in enumerate(top_3):
             print(f"Top {i+1}")
