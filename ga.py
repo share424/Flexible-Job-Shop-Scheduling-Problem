@@ -493,8 +493,15 @@ class GeneticAlgorithm(Solver):
             best_chromosome = self.population[0]
             print("Best fitness:", best_chromosome.fitness)
         # get the best chromosome
-        best_chromosome = self.population[0]
-        print("Best Chromosome:", best_chromosome)
-        print("Best fitness:", best_chromosome.fitness)
+        # best_chromosome = self.population[0]
+        # print("Best Chromosome:", best_chromosome)
+        # print("Best fitness:", best_chromosome.fitness)
+        top_3 = self.population[:3]
+        for i, c in enumerate(top_3):
+            print(f"Top {i+1}")
+            print("Machine Selection:", c.machine_selection)
+            print("Operation Sequence:", c.operation_sequence)
+            print("Fitness/Makespan:", c.fitness)
+            print("==========================================")
         resources = self.decode_chromosome(best_chromosome)
         return resources

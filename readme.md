@@ -96,6 +96,13 @@ save the result from `solve` function to `gantt` chart
 |  `width` | the figure height   |  `100`   |
 |  `height` | the figure width   |  `9`   |
 
+### fjsp.save_as_excel(filename: str, resources: List[Resource])
+save the result from `solve` function to excel
+| Properties       | Description     | Default     |
+| :------------- | :----------: | -----------: |
+|  `filename` | the output file   |     |
+|  `resources` | the resources result from the solver   |     |
+
 ## Dataset
 * in the first line there are (at least) 2 numbers: the first is the number of jobs and the second the number of machines (the 3rd is not necessary, it is the average number of machines per operation)
 

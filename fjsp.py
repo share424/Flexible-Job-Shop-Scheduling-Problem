@@ -2,6 +2,7 @@ from typing import List, Tuple
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
+import pandas as pd
 
 class Machine:
     def __init__(self, id: int, operation_time: int=-1):
@@ -241,3 +242,17 @@ def save_as_fig(filename: str, resources: List[Resource], width=100, height=9):
 
     #save fig
     plt.savefig(filename)
+
+def save_as_excel(filename: str, resources: List[Resource]):
+    data = []
+    for resource in resources:
+        data.append({
+            'Job': [f"J{task.operation.job_id}.{task.operation.id}" for task in resource.tasks],
+            'Relative Start': [task.relative_start for task in resource.tasks],
+            'Operation Time': [task.duration for task in resource.tasks]
+        })
+
+    with pd.ExcelWriter(filename) as writer:
+        for i, d in enumerate(data):
+            df = pd.DataFrame(d)
+            df.to_excel(writer, sheet_name=f"Machine {i+1}")
